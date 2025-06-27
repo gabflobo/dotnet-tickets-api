@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tickets_API.Application.Commands;
+using Tickets_API.Application.Exceptions;
 using Tickets_API.Domain.Interfaces;
 
 namespace Tickets_API.Application.Handlers
@@ -22,9 +23,9 @@ namespace Tickets_API.Application.Handlers
         {
             var ticket = await _repository.GetByIdAsync(request.Id);
 
-            if(ticket == null)
+            if (ticket == null)
             {
-                throw new Exception("Chamado não encontrado");
+                throw new NotFoundException($"Chamado não encontrado.");
             }
 
             if (!string.IsNullOrEmpty(request.Titulo))
