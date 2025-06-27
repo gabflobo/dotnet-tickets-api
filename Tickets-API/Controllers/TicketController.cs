@@ -22,7 +22,11 @@ namespace Tickets_API.Controllers
         public async Task<IActionResult> GetAll([FromQuery] StatusTicket? status)
         {
             var tickets = await _mediator.Send(new GetTicketsQuery(status));
-            return Ok(tickets);
+            return Ok(new
+            {
+                message = "Lista de chamados obtida com sucesso",
+                data = tickets
+            });
         }
 
         [HttpGet("detalhes/{id}")]
@@ -33,16 +37,24 @@ namespace Tickets_API.Controllers
             {
                return NotFound();
             }
-                
 
-            return Ok(ticket);
+
+            return Ok(new
+            {
+                message = "Chamado obtido com sucesso",
+                data = ticket
+            });
         }
 
         [HttpPost("criar")]
         public async Task<IActionResult> Create([FromBody] CreateTicketCommand command)
         {
             var ticket = await _mediator.Send(command);
-            return CreatedAtAction(nameof(GetById), new {id = ticket.Id}, ticket);
+            return CreatedAtAction(nameof(GetById), new {id = ticket.Id}, new
+            {
+                message = "Chamado criado com sucesso!",
+                data = ticket
+            });
         }
 
 
@@ -50,14 +62,14 @@ namespace Tickets_API.Controllers
         public async Task<IActionResult> Update([FromBody] UpdateTicketCommand command)
         {
             await _mediator.Send(command);
-            return NoContent();
+            return Ok(new { message = "Chamado atualizado com sucesso" });
         }
 
         [HttpDelete("remover/{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
             await _mediator.Send(new DeleteTicketCommand(id));
-            return NoContent();
+            return Ok(new { message = "Chamado excluído com sucesso" });
         }
     }
 }
