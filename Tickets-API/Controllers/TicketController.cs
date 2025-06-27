@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Tickets_API.Application.Commands;
@@ -7,6 +8,7 @@ using Tickets_API.Domain.Enums;
 
 namespace Tickets_API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class TicketController : ControllerBase
@@ -37,7 +39,6 @@ namespace Tickets_API.Controllers
             {
                return NotFound();
             }
-
 
             return Ok(new
             {

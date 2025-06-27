@@ -17,7 +17,7 @@ namespace Tickets_API.Middleware
         {
             try
             {
-                await _next(context); // continua o pipeline
+                await _next(context);
             }
             catch (Exception ex)
             {
@@ -37,12 +37,6 @@ namespace Tickets_API.Middleware
                     message = notFoundEx.Message;
                     break;
 
-                // Pode adicionar mais cases para tratar outras exceções customizadas, ex:
-                // case ValidationException validationEx:
-                //     status = HttpStatusCode.BadRequest;
-                //     message = validationEx.Message;
-                //     break;
-
                 default:
                     status = HttpStatusCode.InternalServerError;
                     message = "Ocorreu um erro inesperado.";
@@ -54,9 +48,6 @@ namespace Tickets_API.Middleware
 
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)status;
-
-            // Aqui você pode adicionar logging do erro, ex:
-            // _logger.LogError(exception, exception.Message);
 
             return context.Response.WriteAsync(payload);
         }
