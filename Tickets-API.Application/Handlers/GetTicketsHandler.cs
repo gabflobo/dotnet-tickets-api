@@ -21,7 +21,14 @@ namespace Tickets_API.Application.Handlers
 
         public async Task<IEnumerable<Ticket>> Handle(GetTicketsQuery request, CancellationToken cancellationToken)
         {
-            return await _repository.GetAllAsync();
+            if(request.Status.HasValue)
+            {
+                return await _repository.GetByStatusAsync(request.Status.Value);
+            }
+            else
+            {
+                return await _repository.GetAllAsync();
+            }
         }
     }
 }

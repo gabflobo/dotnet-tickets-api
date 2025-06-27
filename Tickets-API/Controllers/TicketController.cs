@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Tickets_API.Application.Commands;
 using Tickets_API.Application.Queries;
+using Tickets_API.Domain.Enums;
 
 namespace Tickets_API.Controllers
 {
@@ -18,9 +19,9 @@ namespace Tickets_API.Controllers
         }
 
         [HttpGet("listagem")]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] StatusTicket? status)
         {
-            var tickets = await _mediator.Send(new GetTicketsQuery());
+            var tickets = await _mediator.Send(new GetTicketsQuery(status));
             return Ok(tickets);
         }
 

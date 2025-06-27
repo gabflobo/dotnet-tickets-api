@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tickets_API.Domain.Entities;
+using Tickets_API.Domain.Enums;
 using Tickets_API.Domain.Interfaces;
 using Tickets_API.Infrastructure.Data;
 
@@ -53,5 +54,10 @@ namespace Tickets_API.Infrastructure.Repositories
             _context.Tickets.Update(ticket);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<Ticket>> GetByStatusAsync(StatusTicket status)
+        {
+            return await _context.Tickets.Where(t => t.Status == status).ToListAsync();
+        } 
     }
 }
