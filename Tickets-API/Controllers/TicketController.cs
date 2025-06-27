@@ -25,7 +25,7 @@ namespace Tickets_API.Controllers
             return Ok(tickets);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("detalhes/{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
             var ticket = await _mediator.Send(new GetTicketByIdQuery(id));
@@ -38,7 +38,7 @@ namespace Tickets_API.Controllers
             return Ok(ticket);
         }
 
-        [HttpPost]
+        [HttpPost("criar")]
         public async Task<IActionResult> Create([FromBody] CreateTicketCommand command)
         {
             var ticket = await _mediator.Send(command);
@@ -46,20 +46,14 @@ namespace Tickets_API.Controllers
         }
 
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update(Guid id, [FromBody] UpdateTicketCommand command)
+        [HttpPut("atualizar")]
+        public async Task<IActionResult> Update([FromBody] UpdateTicketCommand command)
         {
-            if (id != command.Id)
-            {
-               return BadRequest();
-            }
-                
-
             await _mediator.Send(command);
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("remover/{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
             await _mediator.Send(new DeleteTicketCommand(id));
