@@ -8,9 +8,9 @@ namespace Tickets_API.Domain.Enums
 {
     public enum StatusTicket
     {
-        Aberto = 1,
-        EmAndamento = 2,
-        Resolvido = 3,
-        Cancelado = 4
+        Aberto = 0,
+        EmAndamento = 1,
+        Resolvido = 2,
+        Cancelado = 3
     }
 }
