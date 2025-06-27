@@ -57,5 +57,12 @@ namespace Tickets_API.Controllers
             await _mediator.Send(command);
             return NoContent();
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            await _mediator.Send(new DeleteTicketCommand(id));
+            return NoContent();
+        }
     }
 }
