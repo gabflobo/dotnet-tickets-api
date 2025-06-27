@@ -28,11 +28,14 @@ namespace Tickets_API.Infrastructure.Repositories
         public async Task DeleteAsync(Guid id)
         {
             var ticket = await _context.Tickets.FindAsync(id);
-            if (ticket != null)
+
+            if (ticket == null)
             {
-                _context.Tickets.Remove(ticket);
-                await _context.SaveChangesAsync();
+                throw new Exception("Chamado não encontrado");
             }
+
+            _context.Tickets.Remove(ticket);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Ticket>> GetAllAsync()
