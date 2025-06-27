@@ -27,9 +27,15 @@ namespace Tickets_API.Application.Handlers
                 throw new Exception("Chamado não encontrado");
             }
 
-            ticket.Titulo = request.Titulo;
-            ticket.Descricao = request.Descricao;
-            ticket.NomeSolicitante = request.NomeSolicitante;
+            if (!string.IsNullOrEmpty(request.Titulo))
+                ticket.Titulo = request.Titulo;
+
+            if (!string.IsNullOrEmpty(request.Descricao))
+                ticket.Descricao = request.Descricao;
+
+            if (!string.IsNullOrEmpty(request.NomeSolicitante))
+                ticket.NomeSolicitante = request.NomeSolicitante;
+
             ticket.Status = (Domain.Enums.StatusTicket)request.Status;
 
             await _repository.UpdateAsync(ticket);
